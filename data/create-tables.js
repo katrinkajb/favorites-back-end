@@ -24,6 +24,7 @@ async function run() {
                     author VARCHAR(512) NOT NULL,
                     cover VARCHAR(512) NOT NULL,
                     pages INTEGER NOT NULL,
+                    key VARCHAR(256) NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);

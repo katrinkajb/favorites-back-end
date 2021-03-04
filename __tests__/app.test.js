@@ -18,7 +18,8 @@ describe('app routes', () => {
       const signInData = await fakeRequest(app)
         .post('/auth/signup')
         .send({
-          email: 'jon@user.com',
+          name: 'Bob Loblaw',
+          email: 'bob@loblawblog.com',
           password: '1234'
         });
       
@@ -31,35 +32,15 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test('returns animals', async() => {
-
-      const expectation = [
-        {
-          'id': 1,
-          'name': 'bessie',
-          'coolfactor': 3,
-          'owner_id': 1
-        },
-        {
-          'id': 2,
-          'name': 'jumpy',
-          'coolfactor': 4,
-          'owner_id': 1
-        },
-        {
-          'id': 3,
-          'name': 'spot',
-          'coolfactor': 10,
-          'owner_id': 1
-        }
-      ];
+    test('returns books in search result for Snow Crash', async() => {
+      jest.setTimeout(10000);
 
       const data = await fakeRequest(app)
-        .get('/animals')
+        .get('/books?search=Snow+Crash')
         .expect('Content-Type', /json/)
         .expect(200);
-
-      expect(data.body).toEqual(expectation);
+        
+      expect(data.body.docs[0].title).toEqual('Snow Crash');
     });
   });
 });
