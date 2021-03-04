@@ -19,7 +19,7 @@ describe('app routes', () => {
         .post('/auth/signup')
         .send({
           name: 'Bob Loblaw',
-          email: 'bob@loblawblog.com',
+          email: 'bob2@loblawblog.com',
           password: '1234'
         });
       
@@ -43,38 +43,37 @@ describe('app routes', () => {
       expect(data.body.docs[0].title).toEqual('Snow Crash');
     });
 
-    test.skip('Adds a favorite for user 2', async() => {
+    test('Adds a favorite for user 2', async() => {
       jest.setTimeout(10000);
-
       const newFave = {
-        'title': 'Diamond Age',
-        'author': 'Neal Stephenson',
-        'setting': 'American future',
-        'time_period': 'future',
-        'key': 'HJ85F',
-        'owner_id': 2
+        title: 'Diamond Age',
+        author: 'Neal Stephenson',
+        setting: 'American future',
+        time_period: 'future',
+        key: 'HJ85F',
+        owner_id: 2
       };
-
       const dbFave = {
         ...newFave,
-        'id': 1
+        'id': 4
       };
-
+      
       const data = await fakeRequest(app)
         .post('/api/favorites')
         .send(newFave)
         .set('Authorization', token)
         .expect('Content-Type', /json/)
         .expect(200);
-        
-      expect(data.body).toEqual(dbFave);
+      
+      console.log('YO', data.body);
+      expect(data.body[0]).toEqual(dbFave);
     });
 
-    test.skip('returns favorites for a user', async() => {
+    test('returns favorites for a user', async() => {
       jest.setTimeout(10000);
 
       const userFave = {
-        'id': 1,
+        'id': 4,
         'title': 'Diamond Age',
         'author': 'Neal Stephenson',
         'setting': 'American future',
@@ -89,14 +88,14 @@ describe('app routes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
         
-      expect(data.body).toEqual(userFave);
+      expect(data.body[0]).toEqual(userFave);
     });
 
-    test.skip('deletes a book from favorites', async() => {
+    test('deletes a book from favorites', async() => {
       jest.setTimeout(10000);
 
       const deleteBook = {
-        'id': 1,
+        'id': 4,
         'title': 'Diamond Age',
         'author': 'Neal Stephenson',
         'setting': 'American future',
@@ -106,12 +105,12 @@ describe('app routes', () => {
       };
 
       const data = await fakeRequest(app)
-        .delete('/api/favorites/1')
+        .delete('/api/favorites/4')
         .set('Authorization', token)
         .expect('Content-Type', /json/)
         .expect(200);
         
-      expect(data.body).toEqual(deleteBook);
+      expect(data.body[0]).toEqual(deleteBook);
     });
 
   });
