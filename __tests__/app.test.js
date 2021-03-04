@@ -65,7 +65,6 @@ describe('app routes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
       
-      console.log('YO', data.body);
       expect(data.body[0]).toEqual(dbFave);
     });
 
