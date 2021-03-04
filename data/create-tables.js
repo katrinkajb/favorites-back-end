@@ -18,12 +18,12 @@ async function run() {
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
                 );           
-                CREATE TABLE books (
+                CREATE TABLE favorites (
                     id SERIAL PRIMARY KEY NOT NULL,
                     title VARCHAR(512) NOT NULL,
                     author VARCHAR(512) NOT NULL,
-                    cover VARCHAR(512) NOT NULL,
-                    pages INTEGER NOT NULL,
+                    setting VARCHAR(512) NOT NULL,
+                    time_period VARCHAR(512) NOT NULL,
                     key VARCHAR(256) NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );

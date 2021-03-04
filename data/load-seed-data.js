@@ -1,6 +1,6 @@
 const client = require('../lib/client');
 // import our seed data:
-const books = require('./books.js');
+const favorites = require('./favorites.js');
 const usersData = require('./users.js');
 const { getEmoji } = require('../lib/emoji.js');
 
@@ -25,12 +25,12 @@ async function run() {
     const user = users[0].rows[0];
 
     await Promise.all(
-      books.map(book => {
+      favorites.map(favorite => {
         return client.query(`
-                    INSERT INTO books (title, author, cover, pages, key, owner_id)
+                    INSERT INTO favorites (title, author, setting, time_period, key, owner_id)
                     VALUES ($1, $2, $3, $4, $5, $6);
                 `,
-        [book.title, book.author, book.cover, book.pages, book.key, user.id]);
+        [favorite.title, favorite.author, favorite.setting, favorite.time_period, favorite.key, user.id]);
       })
     );
     
