@@ -40,7 +40,7 @@ describe('app routes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
         
-      expect(data.body.docs[0].title).toEqual('Snow Crash');
+      expect(data.body[0].title).toEqual('Snow Crash');
     });
 
     test('Adds a favorite for user 2', async() => {
@@ -93,23 +93,13 @@ describe('app routes', () => {
     test('deletes a book from favorites', async() => {
       jest.setTimeout(10000);
 
-      const deleteBook = {
-        'id': 4,
-        'title': 'Diamond Age',
-        'author': 'Neal Stephenson',
-        'setting': 'American future',
-        'time_period': 'future',
-        'key': 'HJ85F',
-        'owner_id': 2
-      };
-
       const data = await fakeRequest(app)
         .delete('/api/favorites/4')
         .set('Authorization', token)
         .expect('Content-Type', /json/)
         .expect(200);
         
-      expect(data.body[0]).toEqual(deleteBook);
+      expect(data.body).toEqual([]);
     });
 
   });
